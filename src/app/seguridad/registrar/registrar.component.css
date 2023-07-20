@@ -1,0 +1,27 @@
+#contenedor {
+    height: 700px;
+    width: 100%;
+    border: 1px solid red;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.elemento {
+    height: 150px;
+    width: 150px;
+}
+
+#elemento1 { background-color: red;}
+#elemento2 { 
+    background-color: green;
+}
+#elemento3 { background-color: blue;}
+
+
+mat-form-field {
+    width: 200px;
+}
