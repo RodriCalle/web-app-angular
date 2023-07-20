@@ -1,53 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { Form, NgForm } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { LibrosService } from '../services/libros.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-libros',
   templateUrl: './libros.component.html',
   styleUrls: ['./libros.component.css'],
 })
-export class LibrosComponent implements OnInit {
-  libros = [
-    {
-      titulo: 'El señor de los anillos',
-      autor: 'J.R.R. Tolkien',
-      editorial: 'Minotauro',
-    },
-    { titulo: 'El hobbit', autor: 'J.R.R. Tolkien', editorial: 'Minotauro' },
-    {
-      titulo: 'El silmarillion',
-      autor: 'J.R.R. Tolkien',
-      editorial: 'Minotauro',
-    },
-    {
-      titulo: 'El nombre del viento',
-      autor: 'Patrick Rothfuss',
-      editorial: 'Plaza & Janés',
-    },
-    {
-      titulo: 'El temor de un hombre sabio',
-      autor: 'Patrick Rothfuss',
-      editorial: 'Plaza & Janés',
-    },
-    {
-      titulo: 'El imperio final',
-      autor: 'Brandon Sanderson',
-      editorial: 'Nova',
-    },
-  ];
+export class LibrosComponent implements OnInit, OnDestroy {
 
-  constructor() {}
+  libros = [];
+  libroSubscription: Subscription;
+  
+  constructor(private librosService: LibrosService) {
+  }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.libroSubscription.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.libros = this.librosService.getLibros();
+    this.libroSubscription = this.librosService.librosSubject.subscribe(() => {
+      this.libros = this.librosService.getLibros();
+    });
+  }
 
   eliminarLibro(libro: any) {
-    this.libros = this.libros.filter((l) => l.titulo !== libro.titulo);
+    this.librosService.deleteLibro(libro);
   }
 
   guardarLibro(form: NgForm) {
     if (form.valid){
       let libro = { ...form.value };
-      this.libros.push(libro);
+      this.librosService.addLibro(libro);
       form.reset();
     }
   }
