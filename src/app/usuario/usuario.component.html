@@ -1,0 +1,8 @@
+<p>Bienvenido</p>
+<input type="text" name="nombre" id="nombre" [(ngModel)]="usuario">
+<p>El nombre a agregar es: {{ usuario }}</p>
+
+<button (click)="agregarUsuario()">Agregar</button>
+<div *ngFor="let usuario of usuarios">
+    <p>{{ usuario }}</p>
+</div>

@@ -1,0 +1,15 @@
+.libro {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 5px;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    transition: all .3s ease-in-out;
+    position: relative;
+}
